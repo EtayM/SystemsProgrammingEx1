@@ -1,0 +1,1 @@
+int openAccount(double initialAmount);
