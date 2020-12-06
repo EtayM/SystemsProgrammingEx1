@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "myBank.c"
+#include "myBank.h"
 
 int main() {
     enum Action {
@@ -14,47 +14,57 @@ int main() {
         NONE = 0
     };
     char action = NONE;
-    printf("Please choose a transaction type:\nO-Open Account\nB-Balance Inquiry\nD-Deposit\nW-Withdrawal\nC-Close Account\nI-Interest\nP-Print\nE-Exit\n");
+    printf("\nPlease choose a transaction type:\n O-Open Account\n B-Balance Inquiry\n D-Deposit\n W-Withdrawal\n C-Close Account\n I-Interest\n P-Print\n E-Exit\n");
     while(action != EXIT) {
         scanf(" %c", &action);
         switch (action) {
-            case OPEN_ACCOUNT:
+            case OPEN_ACCOUNT: {
+                openAccount();
                 break;
-            case BALANCE_INQUIRY:
-                printf("Please enter amount for deposit: ");
-                double initialAmount;
-                if (scanf(" %lf", &initialAmount) != 1) {
-                    printf("Failed to read the amount\n");
-                    break;
-                }
-                if (initialAmount < 0) {
-                    printf("Invalid Amount\n");
-                    break;
-                }
-                    openAccount(initialAmount);
+            }
+
+            case BALANCE_INQUIRY: {
+                accountBalance();
                 break;
-            case DEPOSIT:
+            }
+
+            case DEPOSIT: {
+                deposit();
                 break;
-            case WITHDRAWAL:
+            }
+
+            case WITHDRAWAL: {
+                withdrawal();
                 break;
-            case CLOSE_ACCOUNT:
+            }
+
+            case CLOSE_ACCOUNT: {
+                closeAccount();
                 break;
-            case INTEREST:
+            }
+
+            case INTEREST: {
+                interestRate();
                 break;
-            case PRINT:
+            }
+            case PRINT: {
+                printAccounts();
                 break;
-            case NONE:
+            }
+            case NONE: {
                 break;
-            case EXIT:
+            }
+            case EXIT: {
+                closeAllAccounts();
                 break;
-            default:
+            }
+            default: {
                 printf("Invalid transaction type\n");
                 break;
+            }
         }
-        printf("Please choose a transaction type:\nO-Open Account\nB-Balance Inquiry\nD-Deposit\nW-Withdrawal\nC-Close Account\nI-Interest\nP-Print\nE-Exit\n");
+        if (action != EXIT) {
+            printf("\nPlease choose a transaction type:\n O-Open Account\n B-Balance Inquiry\n D-Deposit\n W-Withdrawal\n C-Close Account\n I-Interest\n P-Print\n E-Exit\n");
+        }
     }
-
-    //if reached here user typed E, so we need to close all accounts and exit the program.
-    printf("EXITING\n\n");
-
 }
